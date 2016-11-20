@@ -1,0 +1,43 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc} 
+
+\usepackage{hyperref}
+
+\usepackage{geometry}
+\geometry{ margin=1in}
+
+\usepackage{graphicx}
+\graphicspath{ {pyspark_code/} }
+
+\usepackage{amsmath}
+\numberwithin{figure}{section}
+
+\newenvironment{compactlist}
+{ \begin{itemize}
+    \setlength{\itemsep}{0pt}
+    \setlength{\parskip}{0pt}
+    \setlength{\parsep}{0pt}     }
+{ \end{itemize}} 
+
+%\usepackage[magyar]{babel}
+
+\usepackage{multicol}
+\setlength{\columnsep}{1cm}
+
+\date{2016-11-20}
+\title{'Big Data' elemzési módszerek házi feladat}
+
+\author{Antal János Benjamin\\G9PTHG \and Dovala Rozina\\Z35SBZ \and Gerendai Zsuzsa\\FQPRHP}
+
+\begin{document}
+	\begin{sloppypar}
+		\pagenumbering{gobble}
+		\maketitle
+		\newpage
+		\pagenumbering{arabic}
+		\input{bevezetes}
+		\newpage
+		\input{felderito}
+	\end{sloppypar}
+\end{document}

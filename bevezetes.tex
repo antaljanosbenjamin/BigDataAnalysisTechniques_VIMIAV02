@@ -1,0 +1,53 @@
+		\section{Bevezetés}
+		\subsection{Adatforrás}
+		\paragraph{}	
+		A házi feladatunk Ausztrália 18485 egységből álló, publikus használatban lévő mosdóinak az elemzése volt. Ehhez rendelkezésünkre állt egy állandóan frissülő .csv fájl, amely ezeknek a mosdóknak a különböző tulajdonságait tartalmazza.\par		
+		Forrásaink a feladatkiosztásnál megjelölt \href{https://data.gov.au/dataset/national-public-toilet-map}{honlap}, illetve a mosdók állam által üzemeltetett közös \href{https://toiletmap.gov.au}{honlapja} volt. Az összefoglaló .csv fájlban a mosdók adatairól olvashattunk, míg az egyes attribútumok jelentését az egységes honlap segítségével társítottuk.
+		\subsection{Attribútumok}
+	\begin{compactlist}
+		\item \textbf{Tulajdonság neve} - \textit{Típusa} : Jelentése (Megjegyzés, ha van)
+		\item \textbf{Toilet ID} - \textit{Egész szám} : a mosdó azonosítója (1-től indul a számozás)
+		\item \textbf{URL} - \textit{Szöveg} : a mosdó egyedi honlapja 
+		\item \textbf{Name} - \textit{Szöveg} : a hely vagy intézmény neve, ahol a mosdó található
+		\item \textbf{Address1} - \textit{Szöveg} : közterületi egység (sugárút/út/utca stb.)
+		\item \textbf{Town} - \textit{Szöveg} : város
+		\item \textbf{State} - \textit{Szöveg} : térség
+		\item \textbf{Postcode} - \textit{Szöveg} : irányítószám
+		\item \textbf{AddressNote} - \textit{Szöveg} : megjegyzések az elhelyezkedéssel kapcsolatosan (például a mosdó a park észak-nyugati csücskében van)
+		\item \textbf{Male} - \textit{Logikai} : férfi mosdó
+		\item \textbf{Female} - \textit{Logikai} : női mosdó
+		\item \textbf{Unisex} - \textit{Logikai} : uniszex mosdó
+		\item \textbf{DumpPoint} - \textit{Logikai} : ürítési pont (szemét, lakókocsiban felgyülemlett vizelet stb. elhelyezésére)
+		\item \textbf{FacilityType} - \textit{Szöveg} : adódó lehetőségek, ahol a mosdó helyezkedik (például buszmegálló, park vagy sportpálya)
+		\item \textbf{ToiletType} - \textit{Szöveg} : mosdó típusa (például szennyvízelvezetéses vagy sem)
+		\item \textbf{AccessLimited} - \textit{Logikai} : korlátolt hozzáférés
+		\item \textbf{PaymentRequired} - \textit{Logikai} : kell-e érte fizetni
+		\item \textbf{KeyRequired} - \textit{Logikai} : kulcsot kell-e kérni
+		\item \textbf{AccessNote} - \textit{Szöveg} : megjegyzések a hozzáféréssel kapcsolatosan (például a mosdó egy bevásárlóközpontban van)
+		\item \textbf{Parking} - \textit{Logikai} : parkolási lehetőség
+		\item \textbf{ParkingNote} - \textit{Szöveg} : parkolással kapcsolatos megjegyzések
+		\item \textbf{AccessibleMale} - \textit{Logikai} : férfi mozgássérült mosdó
+		\item \textbf{AccessibleFemale} - \textit{Logikai} : női mozgássérült mosdó
+		\item \textbf{AccessibleUnisex} - \textit{Logikai} : uniszex mozgássérült mosdó
+		\item \textbf{AccessibleNote} - \textit{Szöveg} : megjegyzés a mozgássérült mosdókkal kapcsolatban (például kerekes székkel csak az egyik irányból lehet megközelíteni)
+		\item \textbf{MLAK} - \textit{Logikai} : MLAK kulcs használható-e (MLAK = Master Locksmiths' Association Key, egy mesterkulcs a publikus mosdók nyitásához, amelyet külön lehet igényelni orvosi engedéllyel)
+		\item \textbf{ParkingAccessible} - \textit{Logikai} : mozgássérült parkoló lehetőség
+		\item \textbf{AccessibleParkingNote} - \textit{Szöveg} : mozgássérült parkolási megjegyzések (például csak az utcafronton lehet parkolni)
+		\item \textbf{Ambulant} - \textit{Logikai} : ambuláns betegeknek használható-e
+		\item \textbf{RHTransfer} - \textit{Logikai} : jobbkezes nyitású ajtó mozgássérülteknek
+		\item \textbf{LHTransfer} - \textit{Logikai} : balkezes nyitású ajtó mozgássérülteknek
+		\item \textbf{AdultChange} - \textit{Logikai} : felnőtt pelenkázó
+		\item \textbf{OpeningHoursSchedule} - \textit{Szöveg} : nyitvatartási idő
+		\item \textbf{OpeningHoursNote} - \textit{Szöveg} : nyitvartartáshoz megjegyzések
+		\item \textbf{BabyChange} - \textit{Logikai} : gyermek pelenkázó
+		\item \textbf{Showers} - \textit{Logikai} : zuhanyzó
+		\item \textbf{DrinkingWater} - \textit{Logikai} : ivóvíz lehetősége
+		\item \textbf{SharpsDisposal} - \textit{Logikai} : gyógyszer- és vegyi anyag tároló
+		\item \textbf{SanitaryDisposal} - \textit{Logikai} : egészségügyi hulladék tároló
+		\item \textbf{IconURL} - \textit{Szöveg} : jelölő ikon URL-je
+		\item \textbf{IconAltText} - \textit{Szöveg} : szövegezés (milyen mosdólehetőségek vannak, röviden, például női-férfi-uniszex)
+		\item \textbf{Notes} - \textit{Szöveg} : egyéb megjegyzések (például van a közelben BBQ étterem és lehetőség)
+		\item \textbf{Status} - \textit{Szöveg} : Hitelesített vagy sem (Verified/Unverified) (hitelesített vagy nem)
+		\item \textbf{Latitude} - \textit{Lebegőpontos szám} : szélességi fok
+		\item \textbf{Longitude} - \textit{Lebegőpontos szám} : hosszúsági fok
+	\end{compactlist}

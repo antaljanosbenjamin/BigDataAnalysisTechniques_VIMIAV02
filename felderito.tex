@@ -1,0 +1,144 @@
+	\section{Felderítő adatelemzés}
+	\subsection{Általános adatok}
+	\paragraph{}
+	Az adathalmaz több szöveges és logikai mezőt tartalmaz. A szöveges mezőkkel egy kivételével a felderítő adatelemzés folyamán nem foglalkoztunk. A \textit{Status} mezőből készítettünk egy \textit{StatusNum} nevű mezőt, ahol 1 jelenti a \textit{Verified} és 0 a \textit{Unverified} értéket. \par
+	A logikai mezőkhöz felvettünk két tovább mezőt az alábbi jelentésekkel: \textit{RealUnisexNum = (Male AND Female) OR Unisex}, és \textit{RealAccessibleUnisexNum = (AccessibleMale AND AccessibleFemale) OR AccessibleUnisex}. Ezután minden logikai mezőhöz készítettünk egy egész szám típusú mezőt, ahol 0 jelenti a hamis, 1 pedig az igazi értéket. Végül a koordinátákat tartalmazó és az előállított számértékű mezőkre megállapítottuk az alapvető statisztikai jellemzőket:
+	\begin{table}[!ht]
+		\centering
+		\begin{tabular}{ | l | l | l | l | l | l | }
+			\hline
+			\textbf{Mezőnév} & \textbf{Átlag} & \textbf{Szórás} & \textbf{Minimum} & \textbf{Maximum}\\ \hline
+			Latitude & -32.6784 & 5.4337 & -43.582 & -10.5702\\ \hline
+			Longitude & 144.1794 & 10.7652 & 113.4102 & 153.6263\\ \hline
+			MaleNum & 0.8048 & 0.3964 & 0 & 1\\ \hline
+			FemaleNum & 0.8039 & 0.3971 & 0 & 1\\ \hline
+			UnisexNum & 0.1233 & 0.3288 & 0 & 1\\ \hline
+			DumpPointNum & 0.0277 & 0.1641 & 0 & 1\\ \hline
+			AccessLimitedNum & 0.037 & 0.1888 & 0 & 1\\ \hline
+			PaymentRequiredNum & 0.0085 & 0.0921 & 0 & 1\\ \hline
+			KeyRequiredNum & 0.023 & 0.1499 & 0 & 1\\ \hline
+			ParkingNum & 0.3569 & 0.4791 & 0 & 1\\ \hline
+			AccessibleMaleNum & 0.223 & 0.4163 & 0 & 1\\ \hline
+			AccessibleFemaleNum & 0.2237 & 0.4168 & 0 & 1\\ \hline
+			AccessibleUnisexNum & 0.2751 & 0.4466 & 0 & 1\\ \hline
+			MLAKNum & 0.0281 & 0.1652 & 0 & 1\\ \hline
+			ParkingAccessibleNum & 0.1922 & 0.394 & 0 & 1\\ \hline
+			AmbulantNum & 0.0113 & 0.1055 & 0 & 1\\ \hline
+			LHTransferNum & 0.0323 & 0.1768 & 0 & 1\\ \hline
+			RHTransferNum & 0.0373 & 0.1896 & 0 & 1\\ \hline
+			AdultChangeNum & 0.0021 & 0.0459 & 0 & 1\\ \hline
+			BabyChangeNum & 0.1099 & 0.3128 & 0 & 1\\ \hline
+			ShowersNum & 0.0563 & 0.2304 & 0 & 1\\ \hline
+			DrinkingWaterNum & 0.072 & 0.2584 & 0 & 1\\ \hline
+			SharpsDisposalNum & 0.1477 & 0.3548 & 0 & 1\\ \hline
+			StatusNum & 0.7748 & 0.4177 & 0 & 1\\ \hline
+			RealUnisexNum & 0.9245 & 0.2641 & 0 & 1\\ \hline
+			RealAccessibleUnisexNum & 0.4974 & 0.5 & 0 & 1\\ \hline
+		\end{tabular}
+		\caption{Általános statisztikai leírók}
+	\end{table}\par
+	A logikai értékekhez előállított mezőknél az átlag azt jelenti, hogy az adatsorok mekkora százalékában vesz fel igaz értéket az adott mező. Ebből látható, hogy a mosdók 92\%-ban a nők és a férfiak által használatba vehetőek, 80\%-ban pedig van külön férfi és női mosdó is. Mozgássérült mosdó az esetek felében érhető el, melyek felében unisex, másik felében külön férfi és női mosdó van a mozgássérülteknek.\par	
+	Az általános statisztikai leírók után megvizsgáltuk a 0.5-nél nagyobb abszolútértékű korrelációval rendelkező mezőpárokat, melyek az alábbiak:
+	\begin{compactlist}			
+		\item $corr(AccessibleFemaleNum, AccessibleMaleNum) = 0.9939$
+		\item $corr(FemaleNum, MaleNum) = 0.9799$
+		\item $corr(MaleNum, UnisexNum) = -0.7617$
+		\item $corr(FemaleNum, UnisexNum) = -0.7594$
+		\item $corr(AccessibleUnisexNum, RealAccessibleUnisexNum) = 0.6192$
+		\item $corr(FemaleNum, RealUnisexNum) = 0.5527$
+		\item $corr(MaleNum, RealUnisexNum) = 0.5455$
+		\item $corr(AccessibleMaleNum, RealAccessibleUnisexNum) = 0.5352$
+		\item $corr(AccessibleFemaleNum, RealAccessibleUnisexNum) = 0.5329$
+		\item $corr(ParkingAccessibleNum, ParkingNum) = 0.5312$
+	\end{compactlist}\par
+	A korrelációk alapján a következő sejtéseink vannak:
+	\begin{compactlist}			
+		\item A férfi és a női mosdók általában együtt jelennek meg, azaz kevés olyan hely van, ahol csak az egyik van. Ugyanez igaz a mozgássérült női-férfi mosdókra.
+		\item Ha van férfi vagy női mosdó, akkor nagy eséllyel nincs unisex mosdó.
+		\item A mozgássérült mosdók nagyjából fele csak unisex, másik fele pedig külön női-férfi mosdóval rendelkező mozgássérült mosdó.
+		\item A parkolók nagyrészében van mozgássérült parkoló.
+	\end{compactlist}
+	A többi korreláció bár nem elhanyagolhatók, de sejtések megfogalmazásához nem elég nagyok.
+	\subsection{Mosdók eloszlása}
+	\paragraph{}
+	A mosdókat scatterplot diagramon ábrázolva megláthatjuk, a mosdók az óceán közelében sűrűsödnek.
+	\begin{figure}[!ht]
+		\centering
+			\includegraphics[scale=0.7]{scatter}
+			\caption{Nyílvános mosdók eloszlása Ausztráliában}
+	\end{figure}
+	\paragraph{}
+	A diagramon megfigyelhető továbbá, hogy a nagyvárosok közelében a mosdók annyira sűrűn helyezkednek el, hogy a scatterploton egy egységes kék területet kapunk. a jobb áttekinthetőség érdekében ezért heatmap-en is ábrázoltuk a mosdókat.
+	\begin{figure}[!ht]
+		\centering	
+			\includegraphics[scale=0.5]{heat_without_max}
+			\caption{Nyílvános mosdók Ausztráliában, heatmap-en ábrázolva}
+	\end{figure}
+	\paragraph{}
+	Ekkor azonban látszódik hogy a két szélsőséges eset, ahol közel 800 mosdó kerül egy bin-be elnyomja a többi értéket. Az ábrán azonban jól látszik, hogy a mosdók sűrűsége az óceánhoz közel magasabb, mint a sziget belsejében. A jobb áttekinthetőség érdekében a túl magas értékkel rendelkező bineket maximalizáltuk, továbbá a bin-ek számát is megváltoztattuk. A próbálkozások a dokumentum végén megtekinthetőek, a szerintünk legjobbnak gondolt diagram a 2.3 ábrán látható.	
+	\begin{figure}[!ht]
+		\centering	
+			\includegraphics[scale=0.5]{heat_4_30}
+			\caption{Nyílvános mosdók Ausztráliában, heatmap-en ábrázolva, megfelelő bin számmal és maximum értékkel}
+	\end{figure}
+	\clearpage
+	\subsection{Heatmap variációk}
+	\paragraph{}
+	Az itt látható heatmapek esetén 35x45 bint használtunk, a maximum érték pedig 10,20,30,40 vagy 50. 
+	\begin{figure}[h]
+		\begin{multicols}{2}
+			\includegraphics[scale=0.35]{heat_1_10}
+			\includegraphics[scale=0.35]{heat_1_20}
+			\includegraphics[scale=0.35]{heat_1_30}
+			\includegraphics[scale=0.35]{heat_1_40}
+			\includegraphics[scale=0.35]{heat_1_50}		
+		\end{multicols}
+	\end{figure}
+	\clearpage	
+	\paragraph{}
+	Az itt látható heatmapek esetén 70x90 bint használtunk, a maximum érték pedig szintén 10,20,30,40 vagy 50. 
+	\begin{figure}[h]
+		\begin{multicols}{2}
+			\includegraphics[scale=0.35]{heat_2_10}
+			\includegraphics[scale=0.35]{heat_2_20}
+			\includegraphics[scale=0.35]{heat_2_30}
+			\includegraphics[scale=0.35]{heat_2_40}
+			\includegraphics[scale=0.35]{heat_2_50}		
+		\end{multicols}
+	\end{figure}	
+	\clearpage	
+	\paragraph{}
+	Az itt látható heatmapek esetén 105x135 bint használtunk, a maximum érték pedig szintén 10,20,30,40 vagy 50. 
+	\begin{figure}[h]
+		\begin{multicols}{2}
+			\includegraphics[scale=0.35]{heat_3_10}
+			\includegraphics[scale=0.35]{heat_3_20}
+			\includegraphics[scale=0.35]{heat_3_30}
+			\includegraphics[scale=0.35]{heat_3_40}
+			\includegraphics[scale=0.35]{heat_3_50}		
+		\end{multicols}
+	\end{figure}	
+	\clearpage	
+	\paragraph{}
+	Az itt látható heatmapek esetén 140x180 bint használtunk, a maximum érték pedig szintén 10,20,30,40 vagy 50. 
+	\begin{figure}[h]
+		\begin{multicols}{2}
+			\includegraphics[scale=0.35]{heat_4_10}
+			\includegraphics[scale=0.35]{heat_4_20}
+			\includegraphics[scale=0.35]{heat_4_30}
+			\includegraphics[scale=0.35]{heat_4_40}
+			\includegraphics[scale=0.35]{heat_4_50}		
+		\end{multicols}
+	\end{figure}	
+	\clearpage	
+	\paragraph{}
+	Az itt látható heatmapek esetén 1750x225 bint használtunk, a maximum érték pedig szintén 10,20,30,40 vagy 50. 
+	\begin{figure}[h]
+		\begin{multicols}{2}
+			\includegraphics[scale=0.35]{heat_5_10}
+			\includegraphics[scale=0.35]{heat_5_20}
+			\includegraphics[scale=0.35]{heat_5_30}
+			\includegraphics[scale=0.35]{heat_5_40}
+			\includegraphics[scale=0.35]{heat_5_50}		
+		\end{multicols}
+	\end{figure}
