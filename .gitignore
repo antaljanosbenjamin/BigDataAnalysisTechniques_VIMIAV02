@@ -1,0 +1,10 @@
+## Ignore latex
+*.aux
+*.pdf
+*.out
+*.log
+*.jpg
+
+## Ignore python
+*.csv
+pyspark_code/.ipynb_checkpoints
