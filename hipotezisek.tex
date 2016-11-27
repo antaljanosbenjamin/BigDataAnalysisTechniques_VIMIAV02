@@ -2,7 +2,7 @@
 	\paragraph{}
 	Az adatok további vizsgálatai után a felderítő adatelemzés sejtéseit kiegészítve az alábbi hipotéziseket állítottuk fel. 
 	\subsection{Nemek szerinti vizsgálat}
-	A felderítő adatelemzés során kiemelt korrelációk alapján két hipotézt állítottunk fel:
+	A felderítő adatelemzés során kiemelt korrelációk alapján két hipotézist állítottunk fel:
 	\begin{compactlist}			
 		\item Ha van női vagy férfi mosdó, akkor nagy valószínűséggel nincs unisex mosdó. Ugyanez igaz a mozgáskorlátozott típusú mosdóknál is.
 		\item Vélhetően kevés esetben van női/férfi mosdó férfi/női mosdó nélkül. Ugyanez igaz a mozgáskorlátozott típusú mosdóknál is.
@@ -11,13 +11,13 @@
 	\subsection{Mosdók sűrűsége}
 	A heatmap alapján arra a következtetésre jutottunk, hogy a mosdók geolokációs sűrűsége feltehetően követi a népsűrűséget. A hipotézis igazlásához szükség lesz Ausztrália népsűrűségi adataira. Ezt a hipotézist az államok, esetleg városok népességi adataival történő összehasonlító elemzéssel kívánjuk igazolni.
 	\subsection{Bevásárlóközpontok mosdói}
-	Ha a létesítmény típusa ha \textit{Shopping Center}, akkor az valószínűleg a parthoz közel, a sűrűn lakott területen helyezkedik el és nem sivatag közepén. Ezt a hipotézist a létesítmények típusát kell elsősorban vizsgálni és ez alapján ábrázolni a mosdókat.
+	Ha a létesítmény típusa \textit{Shopping Center}, akkor az valószínűleg a parthoz közel, a sűrűn lakott területen helyezkedik el és nem sivatag közepén. Ennek a hipotézisnek a bizonyításához a létesítmények típusát kell elsősorban vizsgálni és ez alapján ábrázolni a mosdókat.
 	\subsection{Egyéb feltevések, amelyek igazolása kevésbé volt sikeres}
 	\paragraph{}
 	Több más hipotézist is megvizsgáltunk, amelyek ugyan nem bírnak nagy jelentőséggel, de emellett a kapott eredmények sem lettek meghatározóak.\par
 	Egy ilyen feltevésünk volt, hogy a mozgássérült mosdók jelentős részénél használhatjuk az erre a célra létrehozott MLAK kulcsot. Az EDA során fény derült arra, hogy MLAK kulcsot a mosdóknak csupán a 2,8\%-ánál lehet használni. Ezt az értéket vetítettük arra, hogy a mozgássérült mosdók mekkora részében van jelen az MLAK: esetünkben ez kb. 5\% lett, amely szintén nem számottevő.\par
 	Vizsgálatunk tárgyát képezte az is, hogy vajon van-e olyan mosdó, amelynél uniszex mosdó nélkül csak női vagy csak férfi mosdó található. Létezik egy-két ilyen eset, ellenben ez sem számottevő, az előzőekben láthattuk, hogy meghatározóan a női/férfi illemhelyet követi a párja is, ezek pedig az esetek kb. felében kiegészülnek mozgássérült lehetőséggel is.\par
-	A nyilvántartott mosdókat csoportokba rendeztük típusuk szerint is (ToiletType mező értékei), amely esetben sajnos meghatározó mennyiséghez nem tartozott kitöltött mezőérték, így nagyjából csak az adathalmaz 45\%-ról kaptunk információt. A maradék mosdók 72\%-a Sewerage típusú, 16\%-a Septic típusú. A maradék 12\%-on 5 típus osztozik: Compost, Sealed Vault, Pit, Drop toilet, Automatic. A két legnagyyobb csoportot  szűrve is ábrázoltuk a maradék rekordokat a jobb láthatóság érdekében. Érdekes megifgyelés, hogy a 3.2-es ábrán a "sivatag közepén" van egy \textit{Automatic} típusú mosdó, ami a környezettől eléggé szokatlan. Rövid kutatás után kiderült (a rekord \textit{FacilityType} attribútumából kiindulva), hogy ott egy reptér van.
+	A nyilvántartott mosdókat csoportokba rendeztük típusuk szerint is (ToiletType mező értékei), amely esetben sajnos meghatározó mennyiséghez nem tartozott kitöltött mezőérték, így nagyjából csak az adathalmaz 45\%-ról kaptunk információt. A maradék mosdók 72\%-a Sewerage típusú, 16\%-a Septic típusú. A maradék 12\%-on 5 típus osztozik: Compost, Sealed Vault, Pit, Drop toilet, Automatic. A két legnagyobb csoportot  szűrve is ábrázoltuk a maradék rekordokat a jobb láthatóság érdekében. Érdekes megfigyelés, hogy a 3.2-es ábrán a "sivatag közepén" van egy \textit{Automatic} típusú mosdó, ami a környezettől eléggé szokatlan. Rövid kutatás után kiderült (a rekord \textit{FacilityType} attribútumából kiindulva), hogy ott egy reptér van.
 	\begin{compactlist}
 		\item Septic = kék
 		\item Compost = zöld
@@ -42,7 +42,7 @@
 			\includegraphics[scale=0.5]{type_of_toilets_without_sew_and_sep}
 			\caption{A mosdók típusainak ábrázolása, a \textit{Sewerage} és \textit{Septic} típusuak nélkül}
 	\end{figure}
-	Igyekeztünk valamilyen érdekességet találni a FacilityType attribútum alapján is, amely a mosdókhoz kapcsolt létesítmények lehetőségeiről ad plusz információt, például repülőtér, busz- vagy vonatállomás, park stb. van a közelben, vagy ott van a mosdó. Egy ilyen érték a ‘Caravan park’, amely megragadta a figyelmünket, így a lakókocsik révén megvizsgáltuk, hogy ezeknél a létesítményeknél milyen valószínűséggel találunk ürítési pontot (DumpPoint-ot). Szintén nem kaptunk értékelhető eredményeket, csupán 14\%-ot, mivel a mosdók többsége itt is üres mezővel vagy ‘Other’ értékkel rendelkezik, és az ürítési helyek legnagyobb hányada ilyen típusú mosdóknál van felsorolva.
+	Igyekeztünk valamilyen érdekességet találni a FacilityType attribútum alapján is, amely a mosdókhoz kapcsolt létesítmények lehetőségeiről ad plusz információt, például repülőtér, busz- vagy vonatállomás, park stb. van a közelben, vagy ott van a mosdó. Egy ilyen érték a ‘Caravan park’, amely megragadta a figyelmünket, így a lakókocsik révén megvizsgáltuk, hogy ezeknél a létesítményeknél milyen valószínűséggel találunk ürítési pontot (DumpPoint-ot). Szintén nem kaptunk értékelhető eredményeket, csupán 14\%-ot, mivel a mosdók többsége itt is üres mezővel vagy ‘Other’ értékkel rendelkezik, és az ürítési helyek leg\-na\-gyobb hányada ilyen típusú mosdóknál van felsorolva.
 
 	
 	
