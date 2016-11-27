@@ -2,7 +2,7 @@
 	\subsection{Általános adatok}
 	\paragraph{}
 	Az adathalmaz több szöveges és logikai mezőt tartalmaz. A szöveges mezőkkel egy kivételével a felderítő adatelemzés folyamán nem foglalkoztunk. A \textit{Status} mezőből készítettünk egy \textit{StatusNum} nevű mezőt, ahol 1 jelenti a \textit{Verified} és 0 a \textit{Unverified} értéket. \par
-	A logikai mezőkhöz felvettünk két tovább mezőt az alábbi jelentésekkel: \textit{RealUnisexNum = (Male AND Female) OR Unisex}, és \textit{RealAccessibleUnisexNum = (AccessibleMale AND AccessibleFemale) OR AccessibleUnisex}. Ezután minden logikai mezőhöz készítettünk egy egész szám típusú mezőt, ahol 0 jelenti a hamis, 1 pedig az igazi értéket. Végül a koordinátákat tartalmazó és az előállított számértékű mezőkre megállapítottuk az alapvető statisztikai jellemzőket:
+	A logikai mezőkhöz felvettünk két tovább mezőt az alábbi jelentésekkel: \textit{RealUnisex = (Male AND Female) OR Unisex}, és \textit{RealAccessibleUnisex = (AccessibleMale AND AccessibleFemale) OR AccessibleUnisex}. Ezután minden logikai mezőhöz készítettünk egy egész szám típusú mezőt, ahol 0 jelenti a hamis, 1 pedig az igazi értéket. Végül a koordinátákat tartalmazó és az előállított számértékű mezőkre megállapítottuk az alapvető statisztikai jellemzőket:
 	\begin{table}[!ht]
 		\centering
 		\begin{tabular}{ | l | l | l | l | l | l | }
@@ -37,7 +37,8 @@
 		\end{tabular}
 		\caption{Általános statisztikai leírók}
 	\end{table}\par
-	A logikai értékekhez előállított mezőknél az átlag azt jelenti, hogy az adatsorok mekkora százalékában vesz fel igaz értéket az adott mező. Ebből látható, hogy a mosdók 92\%-ban a nők és a férfiak által használatba vehetőek, 80\%-ban pedig van külön férfi és női mosdó is. Mozgássérült mosdó az esetek felében érhető el, melyek felében unisex, másik felében külön férfi és női mosdó van a mozgássérülteknek.\par	
+	A logikai értékekhez előállított mezőknél az átlag azt jelenti, hogy az adatsorok mekkora százalékában vesz fel igaz értéket az adott mező. Ebből látható, hogy a mosdók 92\%-ban a nők és a férfiak által használatba vehetőek, 80\%-ban pedig van külön férfi és női mosdó is. Mozgássérült mosdó az esetek felében érhető el, melyek felében unisex, másik felében külön férfi és női mosdó van a mozgássérülteknek.\par
+	A szórást bár nem tudtuk hogyan értelmezzük a koordináták vagy a bináris attribútumok esetén, de a későbbiekben lehet tudunk hozzá jelentést társítani, ezért hagytuk benne a táblázatban.
 	Az általános statisztikai leírók után megvizsgáltuk a 0.5-nél nagyobb abszolútértékű korrelációval rendelkező mezőpárokat, melyek az alábbiak:
 	\begin{compactlist}			
 		\item $corr(AccessibleFemaleNum, AccessibleMaleNum) = 0.9939$
@@ -61,21 +62,28 @@
 	A többi korreláció bár nem elhanyagolhatók, de sejtések megfogalmazásához nem elég nagyok.
 	\subsection{Mosdók eloszlása}
 	\paragraph{}
-	A mosdókat scatterplot diagramon ábrázolva megláthatjuk, a mosdók az óceán közelében sűrűsödnek.
+	A mosdók elhelyezkedését (a mosdók koordinátáit) scatterplot diagramon ábrázolva megláthatjuk, a mosdók az óceán közelében sűrűsödnek.
 	\begin{figure}[!ht]
 		\centering
-			\includegraphics[scale=0.7]{scatter}
+			\includegraphics[scale=0.5]{scatter}
 			\caption{Nyílvános mosdók eloszlása Ausztráliában}
 	\end{figure}
 	\paragraph{}
-	A diagramon megfigyelhető továbbá, hogy a nagyvárosok közelében a mosdók annyira sűrűn helyezkednek el, hogy a scatterploton egy egységes kék területet kapunk. a jobb áttekinthetőség érdekében ezért heatmap-en is ábrázoltuk a mosdókat.
+	A diagramon megfigyelhető továbbá, hogy a nagyvárosok közelében a mosdók annyira sűrűn helyezkednek el, hogy a scatterploton egy egységes kék területet kapunk. A jobb áttekinthetőség érdekében ezért áttetsző pontokat tartalmazó scatterplot diagramon és heatmap-en is ábrázoltuk a mosdókat.
+	\begin{figure}[!ht]
+		\centering	
+			\includegraphics[scale=0.5]{with_opacity}
+			\caption{Nyílvános mosdók Ausztráliában, overplotting-gal}
+	\end{figure}
+	\paragraph{}
+	A 2.2-es ábra már valamivel jobb áttekinthetőséget biztosít, azonban a sűrű területek még egészen kicsi átlátszóság mellett is egybefüggő területeknek tűnnek.
 	\begin{figure}[!ht]
 		\centering	
 			\includegraphics[scale=0.5]{heat_without_max}
 			\caption{Nyílvános mosdók Ausztráliában, heatmap-en ábrázolva}
 	\end{figure}
 	\paragraph{}
-	Ekkor azonban látszódik hogy a két szélsőséges eset, ahol közel 800 mosdó kerül egy bin-be elnyomja a többi értéket. Az ábrán azonban jól látszik, hogy a mosdók sűrűsége az óceánhoz közel magasabb, mint a sziget belsejében. A jobb áttekinthetőség érdekében a túl magas értékkel rendelkező bineket maximalizáltuk, továbbá a bin-ek számát is megváltoztattuk. A próbálkozások a dokumentum végén megtekinthetőek, a szerintünk legjobbnak gondolt diagram a 2.3 ábrán látható.	
+	Ekkor azonban látszódik hogy a két szélsőséges eset, ahol közel 800 mosdó kerül egy bin-be elnyomja a többi értéket. Az ábrán azonban jól látszik, hogy a mosdók sűrűsége az óceánhoz közel magasabb, mint a sziget belsejében. A jobb áttekinthetőség érdekében a túl magas értékkel rendelkező bineket maximalizáltuk, továbbá a bin-ek számát is megváltoztattuk. A próbálkozások a fejezet végén megtekinthetőek, a szerintünk legjobbnak gondolt diagram a 2.4 ábrán látható.	
 	\begin{figure}[!ht]
 		\centering	
 			\includegraphics[scale=0.5]{heat_4_30}
