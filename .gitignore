@@ -4,7 +4,9 @@
 *.out
 *.log
 *.jpg
+*.png
 
 ## Ignore python
 *.csv
 pyspark_code/.ipynb_checkpoints
+pyspark_code/metastore_db
