@@ -8,13 +8,11 @@ import pyspark.sql.types
 from pyspark.sql.types import *
 from pyspark.sql.functions import udf
 from pyspark.sql import SQLContext
-sqlContext = SQLContext(sc)
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 from matplotlib.colors import LogNorm
 import pandas
 import numpy as np
-from pyspark.mllib.stat import Statistics 
 
 # <codecell>
 
@@ -113,26 +111,36 @@ for col1 in numericValues:
             continue
         correlation = data.corr(col1,col2)
         if abs(correlation) > 0.5:
-            print '\item $corr(' + col1 + ', ' + col2 + ') = |' + str(correlation) + '|$'
+            print 'corr(' + col1 + ', ' + col2 + ') = ' + str(correlation) 
 
 # <codecell>
 
-def filterAndDrawScatter(datas, *args, **kwargs):
+def initializePlt (ranges, title):
+    plt.clf()
     plt.rcParams.update({'font.size' : 14})
-    coords = datas.filter(kwargs.get('filterString', 'True')).select('Longitude','Latitude')
+    plt.title(title, fontsize = 18)
+    plt.axis(ranges)
+    
+def transformDatas(datas, filter):
+    coords = datas.filter(filter).select('Longitude','Latitude')
     panda = coords.toPandas()
     values = panda.get_values()
     x,y = zip(*values)
-    plt.clf()
+    return x,y    
+    
+def filterAndDrawScatter(datas, *args, **kwargs):
+    
     alpha = kwargs.get('alpha',1.0)
     marker = kwargs.get('marker', 'o')
     ranges = kwargs.get('ranges', [110,155,-45,-10])
     title = kwargs.get('scatterTitle',' ')
     color = kwargs.get('color', 'blue')
     
+    initializePlt(ranges,title)
+    
+    x, y = transformDatas(datas,kwargs.get('filterString', 'True'))
+    
     plt.scatter(x,y, edgecolors="none", alpha = alpha, color = color)
-    plt.axis(ranges)
-    plt.title(title, fontsize = 18)
     scatterImage = kwargs.get('scatterImage',None)
     if (scatterImage is not None):
         plt.savefig(scatterImage, bbox_inches = 'tight', pad_inches = 0)
@@ -141,24 +149,20 @@ def filterAndDrawScatter(datas, *args, **kwargs):
     return
 
 def filterAndDrawHeatmap(datas, *args, **kwargs):
-    plt.rcParams.update({'font.size' : 14})
-    coords = datas.filter(kwargs.get('filterString', 'True')).select('Longitude','Latitude')
-    panda = coords.toPandas()
-    values = panda.get_values()
-    x,y = zip(*values)
     heatMax = kwargs.get('heatMax', 30)
     ranges = kwargs.get('ranges', [110,155,-45,-10])
+    x, y = transformDatas(datas,kwargs.get('filterString', 'True'))
     
-    heatmap, xedges, yedges = np.histogram2d(x, y, bins=kwargs.get('bins',[140/4*3,180/4*3]), range = [[ranges[0], ranges[1]], [ranges[2], ranges[3]]])
+    initializePlt(ranges,kwargs.get('heatmapTitle',''))
+    
+    heatmap, xedges, yedges = np.histogram2d(x, y, bins=kwargs.get('bins',[140,180]), range = [[ranges[0], ranges[1]], [ranges[2], ranges[3]]])
     for i in range(len(heatmap)):
             for j in range(len(heatmap[i])):
                     if heatmap[i][j] > heatMax:
                         heatmap[i][j] = heatMax
     extent = [xedges[0], xedges[-1], yedges[0], yedges[-1]]
 
-    plt.clf()
-    plt.axis(ranges)
-    plt.title(kwargs.get('heatmapTitle',' '), fontsize=18)
+    plt.title(kwargs.get('heatmapTitle',' '))
     imgplot = plt.imshow(heatmap.T, extent=extent, origin='lower', norm = LogNorm())
     plt.colorbar()
     heatImage = kwargs.get('heatImage',None)
@@ -168,32 +172,14 @@ def filterAndDrawHeatmap(datas, *args, **kwargs):
 
 # <codecell>
 
-#coords = coords.select('Longitude','Latitude')
-#coords = coords.filter('Longitude >= 146 or Longitude <= 144 or Latitude >= -37 or Latitude <= -39')
-#coords = coords.filter('Longitude >= 152 or Longitude <= 149 or Latitude >= -32 or Latitude <= -35')
-#coords = coords.filter('Longitude >= 154 or Longitude <= 151 or Latitude >= -26 or Latitude <= -29')
-#.filter('Latitude <= -37').filter('Latitude >= -39')
-#for i in [1,2,3,4,5]:
-#    for j in [100,200,300,400,500]:
-#        filterAndDrawHeatmap(data, 
-#                             heatImage='heat_'+str(i)+'_'+str(j)+'_lognorm.jpg',
-#                             heatmapTitle=str(i*35) + 'x' + str(i*45) + ' bins, maximum value is ' + str(j), 
-#                             heatMax=j, 
-#                             bins=[i*35,i*45])
+for i in [1,2,3,4,5]:
+    for j in [100,200,300,400,500]:
+        filterAndDrawHeatmap(data, 
+                             heatImage='heat_'+str(i)+'_'+str(j)+'_lognorm.jpg',
+                             heatmapTitle=str(i*35) + 'x' + str(i*45) + ' bins, maximum value is ' + str(j), 
+                             heatMax=j, 
+                             bins=[i*35,i*45])
         #print '\includegraphics[scale=0.35]{heat_'+str(i)+'_'+str(j) + '}'
-filterAndDrawHeatmap(data, heatMax = 100, heatImage = "proba.jpg")
-
-# <codecell>
-
-data.describe('OnlyMaleNum', 'OnlyFemaleNum', 'UnisexAndMaleNum', 'UnisexAndFemaleNum','OnlyAccessibleNum').show()
-
-# <codecell>
-
-data.describe('AccessibleOnlyMaleNum', 'AccessibleOnlyFemaleNum', 'AccessibleUnisexAndMaleNum', 'AccessibleUnisexAndFemaleNum').show()
-
-# <codecell>
-
-data.corr('MLAKNum', 'RealAccessibleUnisexNum')
 
 # <codecell>
 
@@ -212,25 +198,12 @@ onlyWithDumpPoint.describe('IsCPNum').show()
 
 # <codecell>
 
-for row in data.cube('ToiletType').count().collect():
-    print "\t\t\item " + str(row.ToiletType)
-
-# <codecell>
-
 data.cube('FacilityType').count().show()
-
-# <codecell>
-
-withAccessible = data.filter(data.AccessibleUnisex | data.AccessibleFemale | data.AccessibleMale)
-withAccessible.describe("MLAKNum").show()
-
-# <codecell>
-
 data.cube('ToiletType').count().show()
 
 # <codecell>
 
-withTT = data.filter('ToiletType != null' ).filter('ToiletType != "Sewerage"')
+withToiletType = data.filter('ToiletType != null')
 
 # <codecell>
 
@@ -251,11 +224,36 @@ def toiletTypeToColor(toiletType):
          return 'magenta'
     
 toiletTypeToColor = udf(toiletTypeToColor, StringType())
-withTT = withTT.withColumn('PointColor',toiletTypeToColor(withTT.ToiletType) ); 
-colors = [i.PointColor for i in withTT.select('PointColor').collect()]
-filterAndDrawScatter(withTT, color = [i.PointColor for i in withTT.select('PointColor').collect()], scatterImage='type_of_toilets_without_sew', 
-                     scatterTitle="Type of toilets without Sewerage type")
+withToiletType = withToiletType.withColumn('PointColor',toiletTypeToColor(withToiletType.ToiletType) ); 
+colors = [i.PointColor for i in withToiletType.select('PointColor').collect()]
+filterAndDrawScatter(withToiletType, color = colors, scatterImage='type_of_toilets', 
+                     scatterTitle="Type of toilets")
+withoutSew = withToiletType.filter("ToiletType != 'Sewerage'")
+colors = [i.PointColor for i in withoutSew.select('PointColor').collect()]
+filterAndDrawScatter(withoutSew, color = colors, scatterImage='type_of_toilets_without_sew', 
+                     scatterTitle="Type of toilets without sewerage")
+withoutSewAndSep = withoutSew.filter("ToiletType != 'Septic'")
+colors = [i.PointColor for i in withoutSewAndSep.select('PointColor').collect()]
+filterAndDrawScatter(withoutSewAndSep, color = colors, scatterImage='type_of_toilets_without_sew_and_sep', 
+                     scatterTitle="Type of toilets without sewerage and septic")
 
 # <codecell>
 
+inShoppingCenters = withToiletType.filter("FacilityType = 'Shopping centre'")
+
+# <codecell>
+
+filterAndDrawScatter(inShoppingCenters, scatterImage='in_shopping_centers', scatterTitle='Toilets in shopping centers')
+
+# <codecell>
+
+print "Number of toilets with Female, Male and Unisex type: " + str(data.filter("Female and Male and Unisex").count())
+
+# <codecell>
+
+print "Number of accessible toilets with Female, Male and Unisex type: " + str(data.filter("AccessibleFemale and AccessibleMale and AccessibleUnisex").count())
+
+# <codecell>
+
+print "Number of toilets with only one of Male/Female type: " + str(data.filter("(Female and not Male) or (not Female and Male)").count())
 
