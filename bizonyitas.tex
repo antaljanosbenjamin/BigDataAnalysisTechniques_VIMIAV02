@@ -1,0 +1,53 @@
+	\section{Megerősítő adatelemzés}
+	\subsection{Nemek szerinti vizsgálat}
+	\paragraph{}
+	\begin{compactlist}
+		\item Az első hipotézis igazolásaként szűrtük az adathalmazt olyan esetekre, ahol van női, férfi és unisex mosdó is.	Ez a szűrés egy üres halmazt eredményezett, azaz egyáltalán nincs olyan mosdó, ahol van női, férfi és unisex mosdó egyszerre.
+		\item A második hipotézis igazolásaként szűrtük az adathalmazt olyan esetekre, ahol csak női, vagy csak férfi mosdók vannak. az ilyen mosdók száma 117, ami az adathalmaz 0.6\%-a, ami valóban igen kevés eset.
+	\end{compactlist}
+	\subsection{Bevásárlőközpontok mosdói}
+	\paragraph{}
+		\Figref{toilets_in_shopping_centers}án csak a bevásárlóközpontokban lévő mosdókat ábrázoltuk. Ha összevetjük \figref{map}én lévő térképpel, akkor igazolódni látszik a hipotézis: a bevásárlóközpontokban lévő mosdók valóban a part közelében helyezkednek el. A már említett \textit{AliceSprings}ben lévő mosdó nincs a part közelében, azonban szokatlan elhelyezkedése miatt tekinthető outliernek.
+		\begin{figure}[h]
+			\centering	
+			\includegraphics[scale=0.5]{in_shopping_centers}
+			\caption{Bevásárlóközpontokban lévő mosdók földrajzi eloszlása}
+			\label{fig:toilets_in_shopping_centers}
+		\end{figure}		
+		\begin{figure}[h]
+			\centering	
+			\includegraphics[scale=0.4]{australia_map}
+			\caption{Ausztrália térképe (Google Maps)}
+			\label{fig:map}
+		\end{figure}
+
+	\subsection{Mosdók sűrűsége}
+	\paragraph{}
+	Az utolsó hipozétis igazolásához szerettük volna a mosdók és a népesség eloszlását településenként összehasonlítani, azonban a népességre vonatkozó, megfelelő felbontású adathalmazt nem találtunk. Az általunk megtalált adatok a népesség államonkénti összesítését tartalmazza, így csupán ekkora felbontásban tudtuk összehasonlítani ezt a mosdók számával.\par
+	\Figref{territories}án látható az egyes államokra jutó mosdók és lakosok száma, valamint az egy mosdóra jutó lakosok száma. Az adatokat táblázatos formában \tabref{territoires} tartalmazza. A mosdókról szóló adathalmaz összesen 18485 rekordot tartalmazott, míg Ausztrália teljes népessége 22,5 millió fő, így a teljes országot nézve az egy mosdóra 1163 lakos jut. Az államokra vonatkozó arányszámok kettő kivétellel $\pm$10\%-on belül mozognak. A két kivétel a főváros és Tasmania. Az előbbi eltérését a kiugróan nagy népsűrűséggel lehet megmagyarázni szerintünk, az utóbbit azonban nem tudtuk megmagyarázni széleskörű földrajzi és kulturális háttértudás hiányában. Egy szakértő valószínűleg rá tud mutatni néhány lehetséges okra. Mivel az arányszámok megközelítően egyenlőek a 8-ból 6 államban, így véleményünk szerint ezt a hipotézist is sikerült igazolni. 
+		\begin{figure}[h]
+			\centering	
+			\includegraphics[scale=0.2]{territories}
+			\caption{A mosdók és lakosok száma, valamint egy mosdóra jutó lakosok száma}
+			\label{fig:territories}
+		\end{figure}
+		\begin{table}[h]
+		\centering
+		\begin{tabular}{ | l | r | r | r | }
+			\hline
+			\textbf{Állam neve} & \textbf{Lakosság (fő)} & \textbf{Mosdók száma (darab)} & \textbf{Lakos/mosdó (fő/darab)} \\ \hline
+			Nyugat-Ausztrália & 2,23 millió & 2078 & 1077\\ \hline
+			Északi-terület & 211945 & 199 & 1065\\ \hline
+			Dél-Ausztrália & 1,6 millió & 1497 & 1066\\ \hline
+			Queensland & 4,33 millió & 2078 & 1233\\ \hline
+			Új-Dél-Wales & 6,92 millió & 6135 & 1127\\ \hline
+			\textit{Főváros} & \textit{357222} & \textit{176} & \textit{2029}\\ \hline
+			Victoria & 5,35 millió & 4200 & 1275\\ \hline
+			\textit{Tasmania} & \textit{495354} & \textit{688} & \textit{719} \\ \hhline{|=|=|=|=|}
+			\textbf{Összesen} & \textbf{22,5 millió} & \textbf{18485} & \textbf{1163} \\ \hline
+		\end{tabular}
+		\caption{A mosdók és lakosok száma, valamint egy mosdóra jutó lakosok száma szöveges}
+		\label{tab:territoires}
+		
+	\end{table}\par
+	

@@ -3,6 +3,12 @@
 \usepackage[utf8]{inputenc} 
 
 \usepackage{hyperref}
+\hypersetup{
+    colorlinks=false,
+    pdfborder={0 0 0},
+}
+
+\usepackage{hhline}
 
 \usepackage{geometry}
 \geometry{ margin=1in}
@@ -12,6 +18,7 @@
 
 \usepackage{amsmath}
 \numberwithin{figure}{section}
+\numberwithin{table}{section}
 
 \newenvironment{compactlist}
 { \begin{itemize}
@@ -20,7 +27,14 @@
     \setlength{\parsep}{0pt}     }
 { \end{itemize}} 
 
-%\usepackage[magyar]{babel}
+\newcommand{\secref}[1]{\aref{sec:#1}.~fejezet}
+\newcommand{\figref}[1]{\aref{fig:#1}.~ábr}
+\newcommand{\tabref}[1]{\aref{tab:#1}.~táblázat}
+\newcommand{\Secref}[1]{\Aref{sec:#1}.~fejezet}
+\newcommand{\Figref}[1]{\Aref{fig:#1}.~ábr}
+\newcommand{\Tabref}[1]{\Aref{tab:#1}.~táblázat}
+
+\usepackage[magyar]{babel}
 
 \usepackage{multicol}
 \setlength{\columnsep}{1cm}
@@ -35,10 +49,15 @@
 		\pagenumbering{gobble}
 		\maketitle
 		\newpage
+		\tableofcontents
+		\newpage
 		\pagenumbering{arabic}
 		\input{bevezetes}
 		\newpage
 		\input{felderito}
+		\newpage
 		\input{hipotezisek}
+		\newpage
+		\input{bizonyitas}
 	\end{sloppypar}
 \end{document}
